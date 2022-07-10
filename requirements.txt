@@ -1,7 +1,7 @@
-ray[tune]==1.4.1
+ray[tune]>=1.4.1
 apache-airflow-providers-http
 filelock
 numpy
-pandas==1.2.4
+pandas>=1.2.4
 modin
 xgboost_ray

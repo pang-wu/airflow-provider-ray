@@ -22,12 +22,12 @@ _KVStore = None
 ObjectRef = (ClientObjectRef, RayObjectRef)
 
 
-def get_or_create_kv_store(identifier, allow_new=False):
+def get_or_create_kv_store(identifier, allow_new=False, ray_conn_id='ray_default'):
     global _KVStore
     if _KVStore:
         return _KVStore
     else:
-        _KVStore = KVStore(identifier, allow_new=allow_new)
+        _KVStore = KVStore(identifier, allow_new=allow_new, ray_conn_id=ray_conn_id)
     return _KVStore
 
 
@@ -238,10 +238,9 @@ class KVStore:
                 raise Exception(
                     "Please set the `CHECKPOINTING_CLOUD_STORAGE` environment variable to specify GCS or AWS as the cloud storage provider.")
 
-    def __init__(self, identifier, backend_cls=None, allow_new=False):
+    def __init__(self, identifier, backend_cls=None, allow_new=False, ray_conn_id='ray_default'):
 
-        self.ray_conn_id = os.getenv(
-            "ray_cluster_conn_id", "ray_cluster_connection")
+        self.ray_conn_id = ray_conn_id
         hook = RayClientHook(ray_conn_id=self.ray_conn_id)
         hook.connect()
         self.identifier = identifier

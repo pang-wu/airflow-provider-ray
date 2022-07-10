@@ -33,7 +33,7 @@ def ray_wrapped(f, ray_conn_id="ray_default", eager=False):
         log.info("[wrapper] Got executor.")
 
         executor = get_or_create_kv_store(
-            identifier=RAY_STORE_IDENTIFIER, allow_new=True
+            identifier=RAY_STORE_IDENTIFIER, allow_new=True, ray_conn_id=ray_conn_id
         )
 
         log.info(f"[wrapper] Launching task with {args}, {kwargs}.")
